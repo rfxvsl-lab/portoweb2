@@ -1,6 +1,9 @@
-/* ========================================
-   Zemu Portfolio - Custom Styles (Jenny)
-   ======================================== */
+/*
+ * Zemu Design Portfolio - Custom CSS
+ *
+ * This stylesheet defines the custom styles, animations, and responsive 
+ * adjustments for the Zemu Design portfolio website.
+ */
 
 :root {
     --color-accent: #FD6F00;
@@ -10,162 +13,65 @@
 }
 
 /* ========================================
-   Navigation Styles
+   Global & Typography Styles
+   ======================================== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-light);
+    color: #1A1A1A;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 700;
+}
+
+/* ========================================
+   Navigation
    ======================================== */
 nav {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-nav:hover {
-    box-shadow: 0 4px 12px rgba(253, 111, 0, 0.1);
-}
-
-/* Mobile Menu Animation */
-#mobileMenu {
-    animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 /* ========================================
-   Hero Animations
+   Animations
    ======================================== */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes slideInRight {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes scaleIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in-up {
-    animation: fadeInUp 0.6s ease-out;
-}
-
-.animate-fade-in-down {
-    animation: fadeInDown 0.6s ease-out;
-}
-
-.animate-slide-in-left {
-    animation: slideInLeft 0.6s ease-out;
-}
-
-.animate-slide-in-right {
-    animation: slideInRight 0.6s ease-out;
-}
-
-.animate-scale-in {
-    animation: scaleIn 0.6s ease-out;
-}
-
-.animate-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 
 /* ========================================
-   Hover Effects
+   Buttons & Links
    ======================================== */
 a {
     transition: var(--transition);
 }
 
-button {
+button, .btn {
     transition: var(--transition);
     cursor: pointer;
 }
 
-button:active {
+button:active, .btn:active {
     transform: scale(0.95);
 }
 
 /* ========================================
-   Smooth Scrolling
+   Accessibility
    ======================================== */
-html {
-    scroll-behavior: smooth;
-}
-
-/* ========================================
-   Focus States for Accessibility
-   ======================================== */
-a:focus,
-button:focus {
+a:focus, button:focus, input:focus, textarea:focus {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
 }
 
-input:focus,
-textarea:focus {
-    outline: none;
-}
-
 /* ========================================
-   Scrollbar Styling
+   Scrollbar
    ======================================== */
 ::-webkit-scrollbar {
     width: 8px;
@@ -185,42 +91,10 @@ textarea:focus {
 }
 
 /* ========================================
-   Carousel Animations
+   Responsive Adjustments
    ======================================== */
-[data-service-card] {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-[data-testimonial-item] {
-    transition: opacity 0.3s ease;
-}
-
-/* ========================================
-   Print Styles
-   ======================================== */
-@media print {
-    nav {
-        display: none;
-    }
-    
-    .no-print {
-        display: none;
-    }
-}
-
-/* ========================================
-   Responsive Typography
-   ======================================== */
-@media (max-width: 640px) {
-    h1 {
-        font-size: 2.25rem !important;
-    }
-    
-    h2 {
-        font-size: 1.875rem !important;
-    }
-    
-    h3 {
-        font-size: 1.5rem !important;
+@media (max-width: 768px) {
+    .hero-shape {
+        display: none; /* Hide complex shapes on mobile */
     }
 }
