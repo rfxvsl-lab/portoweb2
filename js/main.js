@@ -2,6 +2,7 @@
  * RFXcreative Portfolio - Main JavaScript
  * 
  * This script handles all interactive elements of the portfolio, including:
+ * - Dark/Light mode theme toggling
  * - Mobile navigation
  * - Portfolio filtering
  * - Smooth scrolling
@@ -12,6 +13,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize all functions on page load
+    initTheme();
     initMobileMenu();
     initPortfolioFilter();
     initSmoothScroll();
@@ -22,26 +24,58 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
+ * Initializes the theme (dark/light mode) functionality.
+ */
+function initTheme() {
+    const themeToggler = document.querySelector('[data-theme-toggler]');
+    if (!themeToggler) return;
+
+    const htmlEl = document.documentElement;
+
+    // Check for saved theme preference in localStorage
+    const savedTheme = localStorage.getItem('theme');
+
+    // Check for OS-level theme preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    // Determine initial theme
+    let currentTheme = savedTheme ? savedTheme : (prefersDark ? 'dark' : 'light');
+
+    // Apply the initial theme
+    htmlEl.classList.add(currentTheme);
+    updateTheme(currentTheme);
+
+    // Listen for theme toggler click
+    themeToggler.addEventListener('click', () => {
+        const newTheme = htmlEl.classList.contains('dark') ? 'light' : 'dark';
+        updateTheme(newTheme);
+    });
+
+    function updateTheme(theme) {
+        htmlEl.classList.remove('light', 'dark');
+        htmlEl.classList.add(theme);
+        localStorage.setItem('theme', theme);
+        initIcons(); // Re-create icons to reflect theme change
+    }
+}
+
+/**
  * Initializes the mobile menu functionality.
  */
 function initMobileMenu() {
     const menuBtn = document.querySelector('[data-mobile-menu-btn]');
     const mobileMenu = document.querySelector('[data-mobile-menu]');
-
     if (!menuBtn || !mobileMenu) return;
 
-    // Toggle menu visibility on button click
     menuBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         mobileMenu.classList.toggle('hidden');
     });
 
-    // Close menu when a link is clicked
     mobileMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
     });
 
-    // Close menu when clicking outside of it
     document.addEventListener('click', (e) => {
         if (!mobileMenu.classList.contains('hidden') && !menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
             mobileMenu.classList.add('hidden');
@@ -55,26 +89,22 @@ function initMobileMenu() {
 function initPortfolioFilter() {
     const filterButtons = document.querySelectorAll('[data-filter-btn]');
     const portfolioItems = document.querySelectorAll('[data-category]');
-
     if (!filterButtons.length || !portfolioItems.length) return;
 
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const filter = button.dataset.filterBtn;
-
-            // Update button styles
             filterButtons.forEach(btn => {
                 btn.classList.toggle('bg-accent', btn === button);
                 btn.classList.toggle('text-white', btn === button);
-                btn.classList.toggle('bg-white', btn !== button);
-                btn.classList.toggle('text-gray-600', btn !== button);
+                // Handle non-active button styles for both themes
+                if (btn !== button) {
+                    btn.classList.remove('bg-accent', 'text-white');
+                }
             });
-
-            // Show/hide portfolio items based on filter
             portfolioItems.forEach(item => {
                 const categories = item.dataset.category.split(' ');
                 const shouldShow = filter === 'all' || categories.includes(filter);
-                
                 item.style.display = shouldShow ? 'block' : 'none';
             });
         });
@@ -89,12 +119,8 @@ function initSmoothScroll() {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
-
             if (target) {
-                window.scrollTo({
-                    top: target.offsetTop - 80, // Offset for fixed navbar
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
             }
         });
     });
@@ -109,7 +135,6 @@ function initActiveNavLink() {
 
     window.addEventListener('scroll', () => {
         const scrollPosition = window.scrollY + 100;
-
         sections.forEach((section, index) => {
             if (section && section.offsetTop <= scrollPosition && section.offsetTop + section.offsetHeight > scrollPosition) {
                 navLinks.forEach(link => link.classList.remove('text-accent', 'font-bold'));
@@ -126,7 +151,6 @@ function initBackToTop() {
     const backToTopBtn = document.getElementById('back-to-top');
     if (!backToTopBtn) return;
 
-    // Show/hide button based on scroll position
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
             backToTopBtn.classList.remove('hidden');
@@ -137,10 +161,7 @@ function initBackToTop() {
         }
     });
 
-    // Scroll to top on click
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+    backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
 /**
@@ -163,7 +184,7 @@ function initScrollReveal() {
 }
 
 /**
- * Initializes Lucide icons.
+ * Initializes or re-initializes Lucide icons.
  */
 function initIcons() {
     if (typeof lucide !== 'undefined') {

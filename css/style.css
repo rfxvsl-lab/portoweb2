@@ -2,29 +2,45 @@
  * RFXcreative Portfolio - Custom CSS
  *
  * This stylesheet defines the custom styles, animations, and responsive 
- * adjustments for the RFXcreative portfolio website.
+ * adjustments for the RFXcreative portfolio website, including dark mode.
  */
 
 :root {
     --color-accent: #FD6F00;
-    --color-dark: #131313;
-    --color-light: #FDFDFD;
+    --color-bg: #FDFDFD;
+    --color-text: #1A1A1A;
+    --color-text-secondary: #6B7280;
+    --color-surface: #FFFFFF;
+    --color-border: #E5E7EB;
+    --color-dark-section-bg: #131313;
+    --color-dark-section-surface: #1E1E1E;
     --transition: all 0.3s ease-in-out;
+}
+
+html.dark {
+    --color-bg: #131313;
+    --color-text: #FDFDFD;
+    --color-text-secondary: #9CA3AF;
+    --color-surface: #1E1E1E;
+    --color-border: #374151;
+    --color-dark-section-bg: #000000;
+    --color-dark-section-surface: #131313;
 }
 
 /* ========================================
    Global & Typography Styles
    ======================================== */
 html {
-    overflow-x: hidden; /* Prevents horizontal scrollbar */
+    overflow-x: hidden;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--color-light);
-    color: #1A1A1A;
+    background-color: var(--color-bg);
+    color: var(--color-text);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4 {
@@ -32,11 +48,10 @@ h1, h2, h3, h4 {
 }
 
 /* ========================================
-   Navigation
+   Theme-aware overrides
    ======================================== */
-nav {
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
+.bg-dark { background-color: var(--color-dark-section-bg); }
+.bg-dark-surface { background-color: var(--color-dark-section-surface); }
 
 /* ========================================
    Animations
@@ -82,7 +97,7 @@ a:focus, button:focus, input:focus, textarea:focus {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--color-light);
+    background: var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -101,4 +116,15 @@ a:focus, button:focus, input:focus, textarea:focus {
     .hero-shape {
         display: none; /* Hide complex shapes on mobile */
     }
+}
+
+/* ========================================
+   Dark Mode Specific Styles (for elements not covered by Tailwind)
+   ======================================== */
+.dark .hero-shape {
+    background: linear-gradient(180deg, rgba(253, 111, 0, 0.05) 0%, rgba(253, 111, 0, 0.2) 100%);
+}
+
+.dark .marquee-container {
+    border-color: var(--color-bg);
 }
