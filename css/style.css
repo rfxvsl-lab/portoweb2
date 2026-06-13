@@ -1,8 +1,8 @@
 /*
- * Zemu Design Portfolio - Custom CSS
+ * RFXcreative Portfolio - Custom CSS
  *
  * This stylesheet defines the custom styles, animations, and responsive 
- * adjustments for the Zemu Design portfolio website.
+ * adjustments for the RFXcreative portfolio website.
  */
 
 :root {
@@ -15,6 +15,10 @@
 /* ========================================
    Global & Typography Styles
    ======================================== */
+html {
+    overflow-x: hidden; /* Prevents horizontal scrollbar */
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: var(--color-light);

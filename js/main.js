@@ -1,5 +1,5 @@
 /**
- * Zemu Design Portfolio - Main JavaScript
+ * RFXcreative Portfolio - Main JavaScript
  * 
  * This script handles all interactive elements of the portfolio, including:
  * - Mobile navigation
